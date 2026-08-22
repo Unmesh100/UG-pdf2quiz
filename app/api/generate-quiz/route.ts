@@ -8,7 +8,7 @@ export async function POST(req: Request) {
   const { files } = await req.json();
   const firstFile = files[0].data;
 
-  const result = await streamObject({
+  const result = streamObject({
     model: google("gemini-1.5-pro-latest"),
     messages: [
       {
@@ -26,7 +26,7 @@ export async function POST(req: Request) {
           {
             type: "file",
             data: firstFile,
-            mimeType: "application/pdf",
+            mediaType: "application/pdf",
           },
         ],
       },
@@ -36,7 +36,7 @@ export async function POST(req: Request) {
     onFinish: ({ object }) => {
       const res = questionsSchema.safeParse(object);
       if (res.error) {
-        throw new Error(res.error.errors.map((e) => e.message).join("\n"));
+        throw new Error(res.error.issues.map((e) => e.message).join("\n"));
       }
     },
   });
