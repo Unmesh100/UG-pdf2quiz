@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { experimental_useObject } from "ai/react";
+import { experimental_useObject } from "@ai-sdk/react";
 import { questionsSchema } from "@/lib/schemas";
 import { z } from "zod";
 import { toast } from "sonner";
@@ -38,7 +38,6 @@ export default function ChatWithFiles() {
   } = experimental_useObject({
     api: "/api/generate-quiz",
     schema: questionsSchema,
-    initialValue: undefined,
     onError: (error) => {
       toast.error("Failed to generate quiz. Please try again.");
       setFiles([]);
